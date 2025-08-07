@@ -1,8 +1,7 @@
 from django.urls import path
-
-
-from hexlet_django_blog.article import views
+from .views import IndexView, HomeRedirectView
 
 urlpatterns = [
-    path('', views.IndexView.as_view()),
+    path('', HomeRedirectView.as_view(), name='home'),  # Домашняя страница
+    path('tags/<str:tag>/<int:article_id>/', IndexView.as_view(), name='article'),
 ]
