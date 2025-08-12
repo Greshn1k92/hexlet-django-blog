@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ app_name }}</title>
-</head>
-<body>
-    <h1>{{ app_name }}</h1>
-    <p>Добро пожаловать в приложение {{ app_name }}!</p>
-</body>
-</html> 
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Список статей</h1>
+    {% for article in articles %}
+        <div class="article">
+            <h2><a href="{% url 'article' id=article.id %}">{{ article.name }}</a></h2>
+            <div>{{ article.body|slice:":200" }}{% if article.body|length > 200 %}...{% endif %}</div>
+            <div class="article-meta">
+                <small>Создано: {{ article.created_at|date:"d.m.Y H:i" }}</small>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %} 

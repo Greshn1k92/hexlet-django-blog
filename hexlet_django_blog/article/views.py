@@ -1,21 +1,29 @@
+from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.shortcuts import render, redirect
-from django.urls import reverse
+
+from hexlet_django_blog.article.models import Article
 
 
 class IndexView(View):
-    def get(self, request, tag, article_id):
-        context = {
-            'article_id': article_id,
-            'tag': tag
-        }
-        return render(request, 'articles/index.html', context)
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(
+            request,
+            "articles/index.html",
+            context={
+                "articles": articles,
+            },
+        )
 
 
-class HomeRedirectView(View):
-    def get(self, request):
-        # Генерируем URL по имени маршрута
-        url = reverse('article', kwargs={'tag': 'python', 'article_id': 42})
-        # Перенаправляем на этот URL
-        return redirect(url)
+class ArticleView(View):
+    def get(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, id=kwargs["id"])
+        return render(
+            request,
+            "articles/show.html",
+            context={
+                "article": article,
+            },
+        )
 

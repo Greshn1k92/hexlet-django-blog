@@ -1,1 +1,7 @@
-<h1>Hello, {{who}}!</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Добро пожаловать в Hexlet Django Blog!</h1>
+    <p>Привет, {{ who }}!</p>
+    <p>Это главная страница блога, созданного на Django.</p>
+{% endblock %}
